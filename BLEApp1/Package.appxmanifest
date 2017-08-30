@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="27a262d8-2ef5-4489-9925-ffef1fd81a1b" Publisher="CN=Dave.HarmonJr" Version="1.0.0.0" />
+  <Identity Name="27a262d8-2ef5-4489-9925-ffef1fd81a1b" Publisher="CN=Dave.HarmonJr" Version="1.0.4.0" />
   <mp:PhoneIdentity PhoneProductId="27a262d8-2ef5-4489-9925-ffef1fd81a1b" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>BLEApp1</DisplayName>
-    <PublisherDisplayName>Dave.HarmonJr</PublisherDisplayName>
+    <DisplayName>KCi Bluetooth Low-Energy Programmer</DisplayName>
+    <PublisherDisplayName>Kingfisher.Company.Inc</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -15,8 +15,9 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="BLEApp1.App">
-      <uap:VisualElements DisplayName="KCi Bluetooth Low-Energy Programmer" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="BLEApp1" BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
+      <uap:VisualElements DisplayName="KCi Bluetooth Low-Energy Programmer" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="An application designed to communicate serially with Kingfisher Company Incorporated STAR Boards via Bluetooth Low Energy UART." BackgroundColor="transparent">
+        <uap:LockScreen Notification="badge" BadgeLogo="Assets\BadgeLogo.png" />
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png">
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>

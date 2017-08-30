@@ -101,7 +101,7 @@ namespace BLEApp1
                 else
                 {
                     bleConnected = false;
-                    maintextoutput.Text += "Disconnected From Bluetooth Module. Check Bluetooth Nodule LED's.\nPress Connect to resume communications after resolving connection issues.\n";
+                    maintextoutput.Text += "Disconnected From Bluetooth Module. Check Bluetooth Nodule LED's, and Bluetooth Settings in Windows.\nThe program should automatically reconnect if Bluetooth was enabled. If it is not, press Connect again.\n";
                 }
             });
         }
