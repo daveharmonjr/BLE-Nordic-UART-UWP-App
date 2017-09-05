@@ -27,6 +27,7 @@ namespace BLEApp1
 
         String deviceID;
         bool bleConnected = false;
+        bool dataModeOn = false;
 
         public MainPage()
         {
@@ -45,6 +46,7 @@ namespace BLEApp1
                 break;
             }
         
+
         }
 
         private async void FindAdaFruitBLE()
@@ -132,16 +134,28 @@ namespace BLEApp1
 
         private void inputText_TextChanged(object sender, TextChangedEventArgs e)
         {
-            
+         if(inputText.Text == "DATAMODEON")
+            {
+                dataModeOn = true;
+            }
             
         }
 
         private void inputText_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-            if(e.Key == Windows.System.VirtualKey.Enter && bleConnected)
+            if (e.Key == Windows.System.VirtualKey.Enter && bleConnected)
             {
-                UARTEngine.Instance.SendTXValue((inputText.Text) + '\r');
-                inputText.Text = "";
+                if (!dataModeOn)
+                { 
+                    UARTEngine.Instance.SendTXValue((inputText.Text) + '\r');
+                    inputText.Text = "";
+                }
+                else if(dataModeOn)
+                {
+                    UARTEngine.Instance.SendTXValue((inputText.Text) + "\r\n");
+                    inputText.Text = "";
+                }
+
                 e.Handled = true;
             }
             else if(e.Key == Windows.System.VirtualKey.Enter && !bleConnected)

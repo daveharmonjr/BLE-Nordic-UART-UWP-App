@@ -94,12 +94,12 @@ namespace BLEApp1
                     _characteristicRX.ValueChanged += Oncharacteristic_ValueChanged;
 
                     var currentDescriptorValue = await _characteristicRX.ReadClientCharacteristicConfigurationDescriptorAsync();
-                    if ((currentDescriptorValue.Status != GattCommunicationStatus.Success) ||
-                    (currentDescriptorValue.ClientCharacteristicConfigurationDescriptor != GattClientCharacteristicConfigurationDescriptorValue.Notify))
-                    {
+                //    if ((currentDescriptorValue.Status != GattCommunicationStatus.Success) ||
+                 //   (currentDescriptorValue.ClientCharacteristicConfigurationDescriptor != GattClientCharacteristicConfigurationDescriptorValue.Notify))
+                  //  {
                         // most likely we never get here, though if for any reason this value is not Notify, then we should really set it to be
                         await _characteristicRX.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.Notify);
-                    }
+                  //  }
 
                     //Setup TX Characteristic
                     _characteristicTX = _service.GetCharacteristics(txGUID)[0];
