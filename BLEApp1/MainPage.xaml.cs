@@ -134,9 +134,15 @@ namespace BLEApp1
 
         private void inputText_TextChanged(object sender, TextChangedEventArgs e)
         {
-         if(inputText.Text == "DATAMODEON")
+            if(inputText.Text == "DATAMODEON")
             {
                 dataModeOn = true;
+                maintextoutput.Text += "\nDATA MODE ON\n";
+            }
+            else if (inputText.Text == "DATAMODEOFF")
+            {
+                dataModeOn = false;
+                maintextoutput.Text += "\nDATA MODE OFF\n";
             }
             
         }
