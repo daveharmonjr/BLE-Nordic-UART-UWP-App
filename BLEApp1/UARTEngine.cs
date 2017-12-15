@@ -76,7 +76,7 @@ namespace BLEApp1
         {
             try
             {
-                Deinitialize();
+                //Deinitialize();
                 _service = await GattDeviceService.FromIdAsync(deviceID);
 
                 if(_service != null)
@@ -94,14 +94,8 @@ namespace BLEApp1
                     _characteristicRX.ValueChanged += Oncharacteristic_ValueChanged;
 
                     var currentDescriptorValue = await _characteristicRX.ReadClientCharacteristicConfigurationDescriptorAsync();
-                //    if ((currentDescriptorValue.Status != GattCommunicationStatus.Success) ||
-                 //   (currentDescriptorValue.ClientCharacteristicConfigurationDescriptor != GattClientCharacteristicConfigurationDescriptorValue.Notify))
-                  //  {
-                        // most likely we never get here, though if for any reason this value is not Notify, then we should really set it to be
-                        await _characteristicRX.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.Notify);
-                  //  }
+                    await _characteristicRX.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.Notify);
 
-                    //Setup TX Characteristic
                     _characteristicTX = _service.GetCharacteristics(txGUID)[0];
 
                 }
@@ -126,8 +120,53 @@ namespace BLEApp1
 
             IBuffer sendBuf = Encoding.ASCII.GetBytes(data).AsBuffer();
 
-            
-           await _characteristicTX.WriteValueAsync(sendBuf,GattWriteOption.WriteWithoutResponse);
+            if (sendBuf.Length < 21)
+            {
+                await _characteristicTX.WriteValueAsync(sendBuf, GattWriteOption.WriteWithoutResponse);
+            }
+            else
+            {
+                int remainder = data.Length % 20;
+                int numLoops = data.Length / 20;
+
+                //Build & Send 20 Byte Packets
+                for(int i = 0; i < numLoops; i++)
+                {
+                    String buff = "";
+
+                    //Build 20 Byte Packet
+                    for (int j = 0; j < 20; j++)
+                    {
+                        
+                        buff += data[j + (20*i)];
+
+                        //Send 20 Byte Packet
+                        if(j == 19)
+                        {
+                            sendBuf = Encoding.ASCII.GetBytes(buff).AsBuffer();
+                            await _characteristicTX.WriteValueAsync(sendBuf, GattWriteOption.WriteWithoutResponse);
+                        }
+                    }
+
+                    //Send Remainder at end of loop if there is a remainder
+                    if(i == (numLoops - 1) && remainder != 0)
+                    {
+                        buff = "";
+                        for(int k = 0; k < remainder; k++)
+                        {
+                            buff += data[k + (20 * i) + 20];
+                        }
+
+                        sendBuf = Encoding.ASCII.GetBytes(buff).AsBuffer();
+                        await _characteristicTX.WriteValueAsync(sendBuf, GattWriteOption.WriteWithoutResponse);
+
+                    }
+
+                }
+
+
+            }
+
         }
             
 
