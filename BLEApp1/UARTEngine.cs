@@ -40,6 +40,8 @@ namespace BLEApp1
 
         private static UARTEngine _instance = new UARTEngine();
 
+        bool initialized = false;
+
         //Allows other parts of the program to access the instance of this class
         public static UARTEngine Instance
         {
@@ -71,6 +73,8 @@ namespace BLEApp1
             }
 
         }
+
+
 
         public async void InitializeServiceAsync(string deviceID)
         {
@@ -196,10 +200,14 @@ namespace BLEApp1
             if (sender.ConnectionStatus == BluetoothConnectionStatus.Connected)
             {
                 System.Diagnostics.Debug.WriteLine("Connected");
+
+               
             }
             else
             {
                 System.Diagnostics.Debug.WriteLine("Disconnected");
+               // Deinitialize();
+               // initialized = false;
             }
 
             if (DeviceConnectionUpdated != null)

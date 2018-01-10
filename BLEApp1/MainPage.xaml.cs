@@ -55,13 +55,15 @@ namespace BLEApp1
         //This function is called when connect button is pressed. Connects to bluetooth device.
         private async void FindAdaFruitBLE()
         {
-            int deviceCount = 0;
+            int deviceCount = 0;                //Reset devicecount every connection to avoid false counts
 
             if (!bleConnected)
             {
                 TextBox outputTextbox = (TextBox)this.FindName("maintextoutput");
 
+                //Creates a search query to find all Bluetooth devices that have the right id
                 String findStuff = "System.DeviceInterface.Bluetooth.ServiceGuid:= \"{6e400001-b5a3-f393-e0a9-e50e24dcca9e}\" AND System.Devices.InterfaceEnabled:= System.StructuredQueryType.Boolean#True";
+                //devices stores the list of devices that match the search
                 var devices = await DeviceInformation.FindAllAsync(findStuff);
 
                 //Get number of BLE Devices Connected/Paired
@@ -75,6 +77,7 @@ namespace BLEApp1
                 //If the BLW device with the correct id's is paired
                 else
                 {
+                    //Print out devices that meet criteria if they exist
                     foreach (DeviceInformation device in devices)
                     {
 
@@ -100,10 +103,12 @@ namespace BLEApp1
 
 
             }
+            //If the program was connected but lost the connection, it will auto retry to connect so don't run the connection process again
             else if(bleReconnecting)
             {
                 maintextoutput.Text += "Lost Connection. Check Power. Orange LED should be on/blinking if there is power.\n";
             }
+            //If the program is already connected do not run the connection process again
             else
             {
                 maintextoutput.Text += "Already Connected. If the blue light is off on the device try restarting the program.\n";
@@ -112,11 +117,14 @@ namespace BLEApp1
 
         }
 
+        //Connect Button Code
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            //Run BLE Connection method
             FindAdaFruitBLE();
         }
 
+        //UI Callback for connection updates from BLE Device
         private async void Instance_DeviceConnectionUpdated(bool isConnected, string error)
         {
             // Serialize UI update to the the main UI thread.
@@ -128,18 +136,21 @@ namespace BLEApp1
                    
                 }
 
+                //When connected run this code
                 if (isConnected)
                 {
+                    //Set 
                     bleConnected = true;
                     bleReconnecting = false;
                     maintextoutput.Text += "Connected To KCi STAR.\nPress Enter in the textfield below to start. (If a callbox you must press the program button on the board first.)\n";
                     connectButton.Content = "Connected";
                     
                 }
+                //When disconnected run this code
                 else
                 {
                     bleReconnecting = true;
-                    maintextoutput.Text += "Disconnected From Bluetooth Module. Check Bluetooth Nodule LED's, and Bluetooth Settings in Windows.\nPress Connect again.\n";
+                    maintextoutput.Text += "Disconnected From Bluetooth Module. Check Bluetooth Nodule LED's, and Bluetooth Settings in Windows.\nReconnecting.....\n";
                     connectButton.Content = "Reconnecting";
                     
                 }

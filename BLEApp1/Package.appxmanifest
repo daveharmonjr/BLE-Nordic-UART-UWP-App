@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="60502KingfisherCompanyInc.KCiBLEProgrammer" Publisher="CN=994743F5-676E-443B-AE6F-12FC800E6AAA" Version="1.1.5.0" />
+  <Identity Name="60502KingfisherCompanyInc.KCiBLEProgrammer" Publisher="CN=994743F5-676E-443B-AE6F-12FC800E6AAA" Version="1.1.7.0" />
   <mp:PhoneIdentity PhoneProductId="5256335d-c0c8-4094-9075-c9efaacb2ebc" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>KCi BLE Programmer</DisplayName>
